@@ -27,6 +27,12 @@ progresses. Ticket description is in `SILOTIGER-667.md`.
 - **`v_dot2_f32_bf16` primitive:** implement as a **local helper inside the kernel
   module** via `llvm.inline_asm` — do **not** add a dependency by editing the installed
   FlyDSL package. (Pattern reference only: `flydsl/expr/rocdl/inline_asm.py`.)
+- **`kVector` for the FP8 baseline:** default `kVector=16` (one 128-bit FP8 transaction)
+  when `HIDDEN % 1024 == 0` (gate_up) / `INTER % 1024 == 0` (down); fall back to `kVector=8`
+  otherwise. Matches the reference "best-known config" (§9.2 of the reference doc).
+- **dot2 inner-loop form for the FP8 baseline:** use the **serialized `s_nop 2`** dot2
+  (`dot2_bf16_packed_raw`) for correctness-first Phases 2/3. The s_nop-free + `dot2_drain4`
+  ILP scheme (multiple independent accumulators) is introduced **only** with the MXFP4 work.
 
 ## 3. Feasibility (verified)
 
@@ -223,3 +229,6 @@ reference replicating §7.1 for the op_test.
 - _phase 0_ — deep read of reference kernels + numeric primitives + CPU oracle done;
   §7 design notes filled (math, mappings, primitives, harness, constraints); feasibility
   refined (2-wide converts are ROCDL ops; only dot2 needs a local helper).
+- _phase 0 close-out_ — locked two baseline choices in §2: `kVector=16` (→8 fallback)
+  and serialized `s_nop 2` dot2 for the FP8 baseline (ILP/drain deferred to MXFP4).
+  Paused before Phase 1.
