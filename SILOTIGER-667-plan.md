@@ -22,6 +22,11 @@ progresses. Ticket description is in `SILOTIGER-667.md`.
 
 ## 2. Locked decisions
 
+- **Test environment:** run all tests in **`flydsl_venv`** (has the correct deps, incl.
+  triton 3.6.0):
+  `./flydsl_venv/bin/python -m pytest -q op_tests/flydsl_tests/test_flydsl_warp_decode_moe.py`
+  (or `./flydsl_venv/bin/python op_tests/flydsl_tests/test_flydsl_warp_decode_moe.py`). The
+  default env's triton 3.3.1 < gluon's 3.6.0 requirement, which blocks `import aiter`.
 - **Kernel location:** `aiter/ops/flydsl/kernels/warp_decode_moe.py` (+ a Python
   wrapper/entry point in `aiter/ops/flydsl/`), matching the existing MoE FlyDSL layout.
 - **`v_dot2_f32_bf16` primitive:** implement as a **local helper inside the kernel
@@ -90,10 +95,6 @@ Status legend: [ ] todo · [~] in progress · [x] done
 - **Where:** primitives + `build_warp_decode_primitives_module` in
   `aiter/ops/flydsl/kernels/warp_decode_moe.py`; test
   `op_tests/flydsl_tests/test_flydsl_warp_decode_moe.py` (`python …` or `pytest`, 4 pass).
-- **Env note:** run tests in **`flydsl_venv`** (has the correct deps, incl. triton 3.6.0):
-  `./flydsl_venv/bin/python -m pytest -q op_tests/flydsl_tests/test_flydsl_warp_decode_moe.py`
-  (or `./flydsl_venv/bin/python op_tests/flydsl_tests/test_flydsl_warp_decode_moe.py`). The
-  default env's triton 3.3.1 < gluon's 3.6.0 requirement, which blocks `import aiter`.
 
 ### Phase 2 — `gate_up` FP8  [ ]
 - [ ] Grid `B*TOPK*INTER` waves; HIDDEN tiled in `64*kVector`.
