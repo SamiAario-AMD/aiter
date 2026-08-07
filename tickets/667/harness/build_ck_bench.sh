@@ -11,15 +11,15 @@
 #   Default arch: detected from rocminfo, falls back to gfx942;gfx950.
 #
 # Output binary:
-#   /home/AMD/bartgips/code/rocm-libraries-wdec/bench_ck_tile_warp_decode
+#   /workspaces/rocm-libraries-wdec/bench_ck_tile_warp_decode
 #
 # The script sets CK_BENCH to the binary path on success.
 
 set -euo pipefail
 
 CK_COMMIT="62e30c9098"
-ROCM_LIBS_ORIG="/home/AMD/bartgips/code/rocm-libraries"
-WORKTREE_DIR="/home/AMD/bartgips/code/rocm-libraries-wdec"
+ROCM_LIBS_ORIG="/workspaces/rocm-libraries"
+WORKTREE_DIR="/workspaces/rocm-libraries-wdec"
 CK_SRC="${WORKTREE_DIR}/projects/composablekernel"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Use our minimal bench (avoids persistent_jtile_kernels_hip.hpp missing in this commit).

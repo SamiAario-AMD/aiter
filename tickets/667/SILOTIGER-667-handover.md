@@ -12,7 +12,7 @@ git -C ~/code/aiter fetch origin
 git -C ~/code/aiter checkout users/bartgips/silotiger-667-warp-decode
 
 # 2. Activate the FlyDSL virtualenv (already built on this machine)
-source /home/AMD/bartgips/code/FlyDSL/.venv/bin/activate
+source /workspaces/FlyDSL/.venv/bin/activate
 
 # 3. Run a quick correctness check
 cd ~/code/aiter
@@ -28,7 +28,7 @@ python compare.py --flydsl flydsl.txt --ck ck.txt
 
 # 5. Build the CK reference bench if needed (binary already exists)
 #    bash build_ck_bench.sh
-#    CK bench binary: /home/AMD/bartgips/code/rocm-libraries-wdec/bench_ck_warp_decode
+#    CK bench binary: /workspaces/rocm-libraries-wdec/bench_ck_warp_decode
 ```
 
 **Note on FlyDSL version:** The aiter `__init__.py` requires FlyDSL ≥ 0.2.4 but the
@@ -56,8 +56,8 @@ All code lives in the **aiter** repo, branch `users/bartgips/silotiger-667-warp-
 | gfx950 benchmark results (2026-07-22) | `tickets/667/harness/flydsl_gfx950_20260722.txt` |
 | gfx942 benchmark results | `tickets/667/harness/flydsl_gfx942.txt` |
 | CK timing data | `tickets/667/harness/ck.txt` |
-| CK bench binary | `/home/AMD/bartgips/code/rocm-libraries-wdec/bench_ck_warp_decode` |
-| CK source | `/home/AMD/bartgips/code/rocm-libraries-wdec/projects/composablekernel/include/ck_tile/ops/warp_decode/kernel/` |
+| CK bench binary | `/workspaces/rocm-libraries-wdec/bench_ck_warp_decode` |
+| CK source | `/workspaces/rocm-libraries-wdec/projects/composablekernel/include/ck_tile/ops/warp_decode/kernel/` |
 
 ---
 
@@ -355,6 +355,6 @@ def _dummy_scale_ptr(): return flyc.from_c_void_p(fx.Uint8, _DUMMY_SCALE_BUF.dat
 
 ## Further reading
 
-- CK warp-decode design doc: `/rocm-libraries-wdec/projects/composablekernel/include/ck_tile/ops/warp_decode/WARP_DECODE_MOE_KERNELS.md`
+- CK warp-decode design doc: `/workspaces/rocm-libraries-wdec/projects/composablekernel/include/ck_tile/ops/warp_decode/WARP_DECODE_MOE_KERNELS.md`
 - FlyDSL kernel authoring guide: `~/code/FlyDSL/docs/kernel_authoring_guide.md`
 - Persistent session notes: `~/.claude/projects/-home-AMD-bartgips-code-FlyDSL/memory/project_667_harness.md`

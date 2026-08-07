@@ -67,7 +67,7 @@ case "${TARGET}" in
         ;;
 
     ck)
-        CK_BENCH="${CK_BENCH:-/home/AMD/bartgips/code/rocm-libraries-wdec/bench_ck_warp_decode}"
+        CK_BENCH="${CK_BENCH:-/workspaces/rocm-libraries-wdec/bench_ck_warp_decode}"
         if [ ! -f "${CK_BENCH}" ]; then
             echo "ERROR: CK bench binary not found at ${CK_BENCH}." >&2
             echo "Run build_ck_bench.sh first, then set CK_BENCH env var." >&2

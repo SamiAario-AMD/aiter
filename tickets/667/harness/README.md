@@ -51,7 +51,7 @@ python bench_flydsl_wd.py --shapes deepseek-v3 qwen3next --batches 1 2 4 8 \
 
 ```bash
 bash build_ck_bench.sh
-# Binary: /home/AMD/bartgips/code/rocm-libraries-wdec/projects/composablekernel/build-wdec/bin/bench_ck_tile_warp_decode
+# Binary: /workspaces/rocm-libraries-wdec/projects/composablekernel/build-wdec/bin/bench_ck_tile_warp_decode
 ```
 
 > On gfx942, the CK bench will compile for both gfx942 and gfx950.  The BF16-act×FP8-weight
@@ -61,7 +61,7 @@ bash build_ck_bench.sh
 ### Step 4 — Run CK benchmark
 
 ```bash
-CK_BENCH=/home/AMD/bartgips/code/rocm-libraries-wdec/projects/composablekernel/build-wdec/bin/bench_ck_tile_warp_decode
+CK_BENCH=/workspaces/rocm-libraries-wdec/projects/composablekernel/build-wdec/bin/bench_ck_tile_warp_decode
 CK_WARP_DECODE_BENCH_SHAPES=deepseek-v3,qwen3next \
 CK_WARP_DECODE_BENCH_BATCHES=1,2,4,8 \
 CK_WARP_DECODE_BENCH_ITERS=30 \
