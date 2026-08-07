@@ -1353,7 +1353,7 @@ def compile_wd_moe_down_reduce(
         lds_base_i32 = arith.constant(0, type=i32)
         if _use_lds:
             lds_ptr = get_dyn_shared()
-            lds_base_i32 = fx.ptrtoint(lds_ptr)
+            lds_base_i32 = fx.ptrtoint(lds_ptr).ir_value()
 
         lane_kV = lane_i32 * arith.constant(k_vector, type=i32)
         c_two = arith.constant(2, type=i32)
@@ -1514,7 +1514,6 @@ def compile_wd_moe_down_reduce(
                         # So scale_idx = K * (_k_step // _block_k) + lane // (_block_k // k_vector)
                         #              = K * 16 + lane // 4
                         c_eight = arith.constant(8, type=i32)
-                        c_32 = arith.constant(32, type=i32)
                         fp4_lane_off = lane_k // c_eight  # i32 word index in FP4 row
                         scale_col = k_step_i32 * arith.constant(
                             _k_step // _block_k, type=i32
