@@ -32,30 +32,20 @@ sys.path.insert(0, _HARNESS_DIR)
 import flydsl.compiler as flyc
 import flydsl.expr as fx
 
-# Use the aiter kernel (supports both bf16 and fp8 weights).
-# Falls back to the local harness stub if aiter is not importable.
-try:
-    import importlib.util
-    import pathlib as _pl
+import importlib.util
+import pathlib as _pl
 
-    _spec = importlib.util.spec_from_file_location(
-        "moe_warp_decode_bart",
-        _pl.Path(__file__).parents[4]
-        / "aiter/aiter/ops/flydsl/kernels/moe_warp_decode_bart.py",
-    )
-    _mod = importlib.util.module_from_spec(_spec)
-    _spec.loader.exec_module(_mod)
-    compile_wd_moe_gate_up = _mod.compile_wd_moe_gate_up
-    compile_wd_moe_gate_up_splitk = _mod.compile_wd_moe_gate_up_splitk
-    compile_wd_moe_gate_finalize = _mod.compile_wd_moe_gate_finalize
-    compile_wd_moe_down_reduce = _mod.compile_wd_moe_down_reduce
-except Exception:
-    from kernels.wd_gate_up_bf16_bart import compile_wd_moe_gate_up
-
-    compile_wd_moe_gate_up_splitk = None
-    compile_wd_moe_gate_finalize = None
-    compile_wd_moe_down_reduce = None
-
+_spec = importlib.util.spec_from_file_location(
+    "moe_warp_decode_bart",
+    _pl.Path(__file__).parents[4]
+    / "aiter/aiter/ops/flydsl/kernels/moe_warp_decode_bart.py",
+)
+_mod = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_mod)
+compile_wd_moe_gate_up = _mod.compile_wd_moe_gate_up
+compile_wd_moe_gate_up_splitk = _mod.compile_wd_moe_gate_up_splitk
+compile_wd_moe_gate_finalize = _mod.compile_wd_moe_gate_finalize
+compile_wd_moe_down_reduce = _mod.compile_wd_moe_down_reduce
 
 _DUMMY_SCALE = None
 
