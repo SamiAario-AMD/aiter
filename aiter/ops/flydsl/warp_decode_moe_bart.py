@@ -74,6 +74,23 @@ def _ptr(t: torch.Tensor):
     return flyc.from_c_void_p(fx.Uint8, t.data_ptr())
 
 
+_DUMMY_SCALE_BUFS: dict = {}
+
+
+def _dummy_scale_ptr(device):
+    """Placeholder block-scale pointer for the non-FP4 down-reduce path.
+
+    ``_launch_down`` always takes a ``w_scale`` pointer (used only for FP4
+    e8m0 block scales); bf16/fp8 paths never dereference it, so a 1-byte
+    buffer per device is sufficient.
+    """
+    buf = _DUMMY_SCALE_BUFS.get(device)
+    if buf is None:
+        buf = torch.zeros(1, dtype=torch.uint8, device=device)
+        _DUMMY_SCALE_BUFS[device] = buf
+    return _ptr(buf)
+
+
 def _get_compile_fns():
     """Lazy-import the kernel builders.
 
@@ -269,6 +286,7 @@ def flydsl_wd_moe_down_reduce_bart(
         _ptr(y_out),
         _ptr(inter_flat),
         _ptr(w_down),
+        _dummy_scale_ptr(inter_out.device),
         _ptr(router_ids),
         _ptr(router_wts),
         B,
