@@ -534,7 +534,7 @@ def compile_wd_moe_gate_up(
                 rocdl.s_nop(2)
                 gp = g_slots[0]
                 up = u_slots[0]
-                for i in range(1, _k_pairs):
+                for i in range_constexpr(1, _k_pairs):
                     gp = arith.addf(gp, g_slots[i])
                     up = arith.addf(up, u_slots[i])
                 g_cur = arith.addf(g_acc, gp)
@@ -616,7 +616,7 @@ def compile_wd_moe_gate_up(
                 rocdl.s_nop(2)
                 gp = g_slots[0]
                 up = u_slots[0]
-                for i in range(1, _k_pairs):
+                for i in range_constexpr(1, _k_pairs):
                     gp = arith.addf(gp, g_slots[i])
                     up = arith.addf(up, u_slots[i])
                 g_cur = arith.addf(g_acc, gp)
@@ -678,7 +678,7 @@ def compile_wd_moe_gate_up(
                 rocdl.s_nop(2)
                 gp = g_sl[0]
                 up = u_sl[0]
-                for i in range(1, _k_pairs):
+                for i in range_constexpr(1, _k_pairs):
                     gp = arith.addf(gp, g_sl[i])
                     up = arith.addf(up, u_sl[i])
                 return arith.addf(g_acc_val, gp), arith.addf(u_acc_val, up)
